@@ -1,0 +1,33 @@
+{
+  "title": "Riddles",
+  "minimum_score": 4,
+  "success_message": "Thank you for playing!",
+  "failure_message": "Please try again.",
+  "questions": [
+    {
+      "question": "What has keys but can’t open locks?",
+      "choices": ["A computer", "A piano", "A door", "A map"],
+      "correct_answer": "A piano"
+    },
+    {
+      "question": "What comes once in a minute, twice in a moment, but never in a thousand years?",
+      "choices": ["The letter \"E\"", "The letter \"N\"", "The letter \"O\"", "The letter \"M\""],
+      "correct_answer": "The letter \"M\""
+    },
+    {
+      "question": "What has to be broken before you can use it?",
+      "choices": ["A promise", "An egg", "A pencil", "A glass"],
+      "correct_answer": "An egg"
+    },
+    {
+      "question": "What has a heart that doesn’t beat?",
+      "choices": ["An artichoke", "A clock", "A tree", "A criminal"],
+      "correct_answer": "An artichoke"
+    },
+    {
+      "question": "What has hands but can’t clap?",
+      "choices": ["A clock", "A person", "A glove", "A monkey"],
+      "correct_answer": "A glove"
+    }
+  ]
+}
