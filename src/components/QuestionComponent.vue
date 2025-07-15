@@ -3,7 +3,7 @@
     <h3>{{ question.question }}</h3>
     <ul>
       <li v-for="(choice, index) in randomChoices" :key="choice">
-        <Answer
+        <AnswerComponent
           :value="choice"
           :correct_answer="question.correct_answer"
           :id="`answer-${index}`"
@@ -12,27 +12,49 @@
         />
       </li>
     </ul>
-    <button class="button" @click="onAnswer" :disabled="hasSubmitted">Next question</button>
+    <button class="button" @click="onAnswer" :disabled="hasSubmitted || !hasAnswer">
+      Next question
+    </button>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { shuffleArray } from '@/functions/array'
 import { onMounted, onUnmounted, ref, computed } from 'vue'
-import Answer from './Answer.vue'
+import AnswerComponent from './AnswerComponent.vue'
+import type { Question } from '@/models/question'
 
-const props = defineProps({
-  question: Object,
-})
+// Without TypeScript
+// const props = defineProps({
+//   question: Object,
+// })
 
-const emits = defineEmits(['answer'])
+const props = withDefaults(
+  defineProps<{
+    question: Question
+  }>(),
+  {
+    question: () => ({
+      question: 'How many eyes do most spiders have ?',
+      choices: ['2', '4', '6', '8'],
+      correct_answer: '8',
+    }),
+  },
+)
 
-const answer = ref(null)
+// Without TypeScript
+//const emits = defineEmits(['answer'])
+
+const emits = defineEmits<{
+  answer: [string]
+}>()
+
+const answer = ref<string>('')
 const hasAnswer = computed(() => !!answer.value)
-const hasSubmitted = ref(false)
+const hasSubmitted = ref<boolean>(false)
 const randomChoices = computed(() => shuffleArray(props.question.choices))
 
-let timer
+let timer: number
 
 const onAnswer = () => {
   hasSubmitted.value = true
@@ -41,7 +63,7 @@ const onAnswer = () => {
 }
 
 onMounted(() => {
-  answer.value = null
+  answer.value = ''
   timer = setTimeout(() => emits('answer', answer.value), 5000)
 })
 
@@ -53,7 +75,7 @@ onUnmounted(() => clearTimeout(timer))
   position: relative;
   padding-top: 2rem;
 }
-.button {
+.right {
   position: absolute;
   right: 0;
 }
